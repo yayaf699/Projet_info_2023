@@ -1,11 +1,15 @@
 /* Chacun ajoute son nom ici */
-/* Auteurs : ... et Yanisse */
+<<<<<<< HEAD
+/* Auteurs : Celina et Yanisse */
+=======
+/* Auteurs : Celina et ... */
+>>>>>>> dd88d9eca1f418efda99fe65bd85282e56835584
 
 #include <stdio.h>
 
 int main (void) {
 	/* Oups, on a oublié le \n final. */
-	printf("Hello, world");
+	printf("Hello, world\n");
 
 	printf("Je calcule la réponse ... ");
 	
