@@ -114,7 +114,7 @@ def plot_value_array(i, predictions_array, true_label):
 # plt.tight_layout()
 # plt.show()
 
-img = cv2.imread("./test/huit_2.png", 0)
+img = cv2.imread("./test/zizi.png", 0)
 img = cv2.bitwise_not(img)
 img = np.expand_dims(img,0)
 
