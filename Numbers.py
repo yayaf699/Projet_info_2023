@@ -48,7 +48,8 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-model.fit(train_images, train_labels, epochs=10)
+model.fit(train_images, train_labels, epochs=10of131004@
+)
 
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
 
@@ -114,7 +115,7 @@ def plot_value_array(i, predictions_array, true_label):
 # plt.tight_layout()
 # plt.show()
 
-img = cv2.imread("./test/zizi.png", 0)
+img = cv2.imread("./test/neuf.png", 0)
 img = cv2.bitwise_not(img)
 img = np.expand_dims(img,0)
 
