@@ -1,13 +1,18 @@
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers
+from keras.preprocessing.image import ImageDataGenerator
 
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
+
 numbers = tf.keras.datasets.mnist
 (train_images, train_labels), (test_images, test_labels) = numbers.load_data()
+
+train_images = train_images.reshape(60000,28,28,1).astype('float32')
+test_images = test_images.reshape(10000,28,28,1).astype('float32')
 
 print(train_labels)
 
@@ -31,29 +36,85 @@ plt.grid(False)
 plt.show()
 
 
-plt.figure(figsize=(10,10))
-for i in range(25):
-    plt.subplot(5,5,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(train_images[i], cmap=plt.cm.binary)
-    plt.xlabel(class_names[train_labels[i]])
-plt.show()
+# plt.figure(figsize=(10,10))
+# for i in range(25):
+#     plt.subplot(5,5,i+1)
+#     plt.xticks([])
+#     plt.yticks([])
+#     plt.grid(False)
+#     plt.imshow(train_images[i], cmap=plt.cm.binary)
+#     plt.xlabel(class_names[train_labels[i]])
+# plt.show()
+
+datagen = ImageDataGenerator(rotation_range=30,
+                             width_shift_range=0.25,
+                             height_shift_range=0.25,
+                             shear_range=0.10,
+                             zoom_range=[0.5,1.5])
+
+datagen.fit(train_images.reshape(train_images.shape[0], 28, 28, 1))
+
+# for X_batch, y_batch in datagen.flow(train_images, train_labels, batch_size=9):
+#     for i in range(0,9):
+#         plt.subplot(330 + 1 + i)
+#         plt.axis('off')
+#         plt.imshow(X_batch[i][:,:,0], cmap='gray')
+#         plt.title('number = ' + str(y_batch[i]))
+#     plt.show()
 
 #Creation du model
 
-model = tf.keras.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(128, activation=tf.nn.relu),
-    tf.keras.layers.Dense(10)
+model = keras.Sequential([
+    layers.Input(shape=(28, 28, 1)),
+    layers.Conv2D(32, (5,5), activation='relu'),
+    layers.Conv2D(32, (5,5), activation='relu'),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.MaxPooling2D(pool_size=(2,2)),
+    layers.Dropout(0.05),
+
+    layers.Conv2D(64, (3,3), activation='relu'),
+    layers.Conv2D(64, (3,3), activation='relu'),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.MaxPooling2D((2,2)),
+    layers.Dropout(0.05),
+    layers.Flatten(),
+
+    layers.Dense(256, activation='relu'),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.05),
+
+    layers.Dense(128, activation='relu'),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.05),
+
+    layers.Dense(84, activation='relu'),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.05),
+
+    layers.Dense(10, activation='softmax')
 ])
 
+earlystopper = keras.callbacks.EarlyStopping(monitor='val_loss', 
+                                             min_delta =0, 
+                                             patience=6, 
+                                             verbose=1, 
+                                             mode='min',
+                                             restore_best_weights=True)
+
 model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-history = model.fit(train_images, train_labels, validation_data=(test_images, test_labels), epochs=30, batch_size=50)
+history = model.fit_generator(datagen.flow(train_images,train_labels , batch_size=84),
+                    validation_data=datagen.flow(test_images,test_labels , batch_size=84),
+                    epochs=30,
+                    steps_per_epoch=train_images.shape[0] // 84,
+                    callbacks=earlystopper)
 
 (test_acc, test_loss) = model.evaluate(test_images,  test_labels, verbose=2)
 
@@ -142,7 +203,7 @@ def plot_value_array(i, predictions_array, true_label):
 # plt.tight_layout()
 # plt.show()
 
-img = cv2.imread("./test/Trois.png", 0)
+img = cv2.imread("./test/Cinq.png", 0)
 img = cv2.bitwise_not(img)
 img = cv2.resize(img, (28, 28))
 img = np.expand_dims(img,0)
@@ -160,7 +221,7 @@ plt.show()
 
 
 
-predictions_single = probability_model.predict(img)
+predictions_single = model.predict(img)
 
 print("J'ai predit :")
 print(class_names[np.argmax(predictions_single)])
@@ -172,4 +233,4 @@ _ = plt.xticks(range(10), class_names, rotation=45)
 plt.show()
 
 
-model.save('model.h5')
+model.save('model3.h5')
