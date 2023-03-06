@@ -1,21 +1,33 @@
-import cherrypy 
+from flask import Flask, render_template, url_for
+app = Flask(__name__)
 
-class MonSiteWeb(object):                   # Classe maitresse de l'App 
-    def index(self):                        # Méthode invoquée comme URL racine (/)
-        return """
-            <form action="salutation" method="GET">
-            Bonjour. Quel est votre nom ?
-            <input type="text" name="nom" />
-            <input type="submit" value="OK" />
-            </form>
-            """
-    index.exposed = True                    # la méthode doit être 'publiée'
-    def salutation(self, nom = None):
-        if nom:
-            return "Bonjour {0}, comment allez-vous?".format(nom)
-        else:
-            return 'Entrez votre nom <a href="/">ici</a>'
-    salutation.exposed = True
+posts = [
+    {
+        'author' :'Sofiane Chogli', 
+        'title' : 'Blog Post 1',
+        'content' : 'First Post Content', 
+        'date_posted' : '6 Mars, 2023'
 
-###### Programme principal : ########
-cherrypy.quickstart(MonSiteWeb(), config="server.conf")
+    },
+    {
+        'author' :'Sofiane Chogli', 
+        'title' : 'Blog Post 2',
+        'content' : 'Second Post Content', 
+        'date_posted' : '7 Mars, 2023'
+
+    
+    }
+]
+
+@app.route("/")
+@app.route("/home")
+def home():
+    return render_template('home.html', posts=posts)
+
+@app.route("/about")
+def about():
+    return render_template('about.html', title='About')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
