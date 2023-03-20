@@ -23,6 +23,7 @@ probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
 
 img = normalize("./test/test.png")
 
+
 plt.figure()
 plt.imshow(img[0])
 plt.colorbar()
