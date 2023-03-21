@@ -91,5 +91,31 @@ function undo(){
         context.putImageData(tab_dessin[index], 0,0);
     }
      
+}
+
+function save(){
+
+    const canvas = document.getElementById("canvas");
+
+    // Récupération de l'image base64
+    const data = canvas.toDataURL();
+
+    // Création d'un formulaire avec l'image en tant que donnée
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/home";
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "image";
+    input.value = data;
+    form.appendChild(input);
+
+    // Envoi du formulaire
+    document.body.appendChild(form);
+
+    form.submit();
+
+    //clear 
+    clear_canvas();
 
 }
