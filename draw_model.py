@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from keras import layers
 
+
 dir = './dataset'
 image_size = (100,100)
 batch_size = 32
@@ -21,15 +22,15 @@ train_data = keras.preprocessing.image_dataset_from_directory(
 )
 
 # Chargement du dataset de validation
-# valid_data = keras.utils.image_dataset_from_directory(
-#     dir,
-#     validation_split=0.2,
-#     subset="validation",
-#     seed=123,
-#     color_mode="grayscale",
-#     image_size=image_size,
-#     batch_size=batch_size
-# )
+valid_data = keras.utils.image_dataset_from_directory(
+    dir,
+    validation_split=0.2,
+    subset="validation",
+    seed=123,
+    color_mode="grayscale",
+    image_size=image_size,
+    batch_size=batch_size
+)
 
 plt.figure(figsize=(8, 8))
 for images, labels in train_data.take(1):
