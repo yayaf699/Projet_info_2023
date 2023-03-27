@@ -103,11 +103,10 @@ function save(){
     // Création d'un formulaire avec l'image en tant que donnée
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "/home";
+    form.action = "/save";
     const input = document.createElement("input");
     input.type = "hidden";
     input.name = "image";
-    input.value = data;
     form.appendChild(input);
 
     // Envoi du formulaire
