@@ -1,9 +1,8 @@
 from pathlib import Path
-import matplotlib.pyplot as plt
 import quickdraw as qd
 
 
-image_size = (100, 100)
+image_size = (28, 28)
 
 # Fonction qui récupère les images dans la base de données de Google
 def generate_class_images(name, max_drawings, recognized):
