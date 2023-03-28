@@ -94,6 +94,7 @@ function undo(){
 }
 
 function save(){
+    console.log("debut");
 
     const canvas = document.getElementById("canvas");
 
@@ -105,16 +106,20 @@ function save(){
     form.method = "POST";
     form.action = "/save";
     const input = document.createElement("input");
-    input.type = "hidden";
+    input.type = "file";
     input.name = "image";
+    input.filename="img";
+    input.value = "img";
     form.appendChild(input);
-
+    console.log("milieu");
     // Envoi du formulaire
     document.body.appendChild(form);
 
     form.submit();
+    console.log("soumis !");
 
     //clear 
     clear_canvas();
+    console.log("effacer");
 
 }
