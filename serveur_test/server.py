@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, send_from_directory
 import os
-from werkzeug.utils import secure_filename
+from PIL import Image
 
 
 app = Flask(__name__)
@@ -15,18 +15,13 @@ def home():
     
     return render_template('index.html') #image=image_base
 
-@app.route("/save", methods=['GET', 'POST'])
+@app.route("/save", methods=['POST'])
 def save():
-    # if request.method == 'POST':
-    #     image = request.files['file']
-    #     # print(image)
-    #     image.save(os.path.join(app.config['UPLOAD_FOLDER'], "img.jpg"))
-    #     print("ok")
-    #     return
-    # else :
-    #     return 
+    # image_data = request.get_json()['image']
+    # img = Image.open(request.get(image_data, stream=True).raw)
+    # img.save(os.path.join(app.static_folder, "images", "uploaded_image.png"))
+     return "ok"
        
     
-
 if __name__ == '__main__':
     app.run(debug=True)

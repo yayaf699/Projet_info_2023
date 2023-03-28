@@ -94,32 +94,45 @@ function undo(){
 }
 
 function save(){
-    console.log("debut");
+    // console.log("debut");
 
-    const canvas = document.getElementById("canvas");
+    // const canvas = document.getElementById("canvas");
 
-    // Récupération de l'image base64
-    const data = canvas.toDataURL();
+    // // Récupération de l'image base64
+    // const data = canvas.toDataURL();
 
-    // Création d'un formulaire avec l'image en tant que donnée
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "/save";
-    const input = document.createElement("input");
-    input.type = "file";
-    input.name = "image";
-    input.filename="img";
-    input.value = "img";
-    form.appendChild(input);
-    console.log("milieu");
-    // Envoi du formulaire
-    document.body.appendChild(form);
+    // // Création d'un formulaire avec l'image en tant que donnée
+    // const form = document.createElement("form");
+    // form.method = "POST";
+    // form.action = "/save";
+    // const input = document.createElement("input");
+    // input.type = "file";
+    // input.name = "image";
+    // input.filename="img";
+    // input.value = "img";
+    // form.appendChild(input);
+    // console.log("milieu");
+    // // Envoi du formulaire
+    // document.body.appendChild(form);
 
-    form.submit();
-    console.log("soumis !");
+    // form.submit();
+    // console.log("soumis !");
 
-    //clear 
-    clear_canvas();
-    console.log("effacer");
+    // //clear 
+    // clear_canvas();
+    // console.log("effacer");
+    var canvas = document.getElementById('canvas');
+    var dataURL = canvas.toDataURL();
+
+    
+    // fetch('/save', {
+    //     method: 'POST',
+    //     headers: {
+    //     'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ image: dataURL })
+    // })
+    // .then(response => response.json())
+    // .then(data => console.log(data));    
 
 }
