@@ -147,7 +147,7 @@ history = model.fit(train_data,
 
 # (test_acc, test_loss) = model.evaluate(train_data,  valid_data, verbose=2)
 
-model.save('draw2.h5')
+model.save('draw_model.h5')
 
 plt.figure(figsize=(16, 6))
 plt.subplot(1, 2, 1)
