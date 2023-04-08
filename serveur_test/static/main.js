@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
-canvas.width = window.innerWidth -60;
-canvas.height = 400;
+canvas.width = 500;
+canvas.height = 500;
 
 
 let context = canvas.getContext("2d");
@@ -123,6 +123,16 @@ function save(){
     // console.log("effacer");
     var canvas = document.getElementById('canvas');
     var dataURL = canvas.toDataURL();
+
+    $.ajax({
+        type: "POST",
+        url: "/process_image",
+        data: { image: dataURL },
+        success: function(response) {
+            // afficher l'image sur la page web
+            $('#pie-chart-img').attr('src', 'data:image/png;base64,' + response.image);
+        }
+      });
 
     
     // fetch('/save', {
