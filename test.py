@@ -4,13 +4,9 @@ from tensorflow import keras
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-from PIL import Image, ImageOps, ImageDraw 
-import smartcrop
+from PIL import Image, ImageOps
+from googletrans import Translator
 
-
-
-
-# class_names = ['Zero', 'Un', 'Deux', 'Trois', 'Quatre', 'Cinq', 'Six', 'Sept', 'Huit', 'Neuf']
 
 class_names = []
 
@@ -19,67 +15,42 @@ with open("classes.txt", 'r') as f:
 
 print(class_names)
 
-model = keras.models.load_model("draw2.h5")
+def transform_img(img):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
+    dst = cv2.Canny(gray, 0, 150)
+    blured = cv2.blur(dst, (5,5), 0)    
+    MIN_CONTOUR_AREA=200
+    img_thresh = cv2.adaptiveThreshold(blured, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+    Contours,imgContours = cv2.findContours(img_thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    for contour in Contours:
+        if cv2.contourArea(contour) > MIN_CONTOUR_AREA:
+            [X, Y, W, H] = cv2.boundingRect(contour)
+    for i in range(20):
+        if Y > 0 and X > 0:
+            Y=Y-1
+            X=X-1
+        if Y+H <img.shape[1] and X+H < img.shape[0]:
+            H=H+2
+            W=W+2
+    img = img[Y:Y+H, X:X+W]
+    img = Image.fromarray(img)
+    img = ImageOps.grayscale(img)
+    img = img.resize( (28, 28), Image.Resampling.LANCZOS)
+    return np.expand_dims(img,0)
 
-# def normalize(link):
-#     img = cv2.imread(link, 0)
-#     #img = cv2.bitwise_not(img)
-#     img = cv2.resize(img, (100, 100))
-#     img = img / 255.0
-#     img = np.expand_dims(img,0)
-#     return img
+model = keras.models.load_model("model_draw.h5")
 
-# img = normalize("./test/test.png")
+img = Image.open("/home/yanisse/Images/test.png")
 
-img = Image.open('/home/yanisse/Images/test.png')
-img = ImageOps.grayscale(img)
-img = img.resize( (28, 28), Image.Resampling.LANCZOS)
-img = np.expand_dims(img,0)
-plt.figure()
-plt.imshow(img[0])
-plt.colorbar()
-plt.show()
-
-
-
-# img = Image.open('/home/yanisse/Images/test.png')
-# img = ImageOps.grayscale(img)
-# # img = cv2.bitwise_not(img)
-# img = img.resize( (28, 28), Image.Resampling.BILINEAR)
-# # img = img / 255.0
-# img = np.expand_dims(img,0)
-# plt.figure()
-# plt.imshow(img[0])
-# plt.colorbar()
-# plt.show()
-
-# plt.figure()
-# plt.imshow(img[0])
-# plt.colorbar()
-# plt.show()
-
-# def plot_value_array(i, predictions_array):
-#   plt.grid(False)
-#   plt.xticks(range(345))
-#   plt.yticks([])
-#   thisplot = plt.bar(range(345), predictions_array, color="#777777")
-#   plt.ylim([0, 1])
-#   predicted_label = np.argmax(predictions_array)
-
-#   thisplot[predicted_label].set_color('red')
+img = transform_img(img)
 
 predictions_single = model.predict(img)
-
-print(predictions_single)
 
 print("J'ai predit :")
 print(class_names[np.argmax(predictions_single)])
 
 
 idx = (-predictions_single).argsort()[:3]
-# top4 = predictions_single.argsort()
-
-print(idx[0][0:3])
 
 autre = 1 - predictions_single[0][idx[0][0]] - predictions_single[0][idx[0][1]] - predictions_single[0][idx[0][2]]
 top3 = [predictions_single[0][idx[0][0]],
