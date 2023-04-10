@@ -93,6 +93,8 @@ function undo(){
      
 }
 
+
+
 function save(){
     // console.log("debut");
 
@@ -121,18 +123,21 @@ function save(){
     // //clear 
     // clear_canvas();
     // console.log("effacer");
-    var canvas = document.getElementById('canvas');
-    var dataURL = canvas.toDataURL();
+
+
+    const canvas = document.getElementById('canvas');
+    const dataURL = canvas.toDataURL();
 
     $.ajax({
         type: "POST",
-        url: "/process_image",
+        url: "/predict",
         data: { image: dataURL },
         success: function(response) {
             // afficher l'image sur la page web
-            $('#pie-chart-img').attr('src', 'data:image/png;base64,' + response.image);
+                $('#diagramme').attr('src', 'data:image/png;base64,' + response.image);
         }
       });
+      
 
     
     // fetch('/save', {
@@ -146,3 +151,6 @@ function save(){
     // .then(data => console.log(data));    
 
 }
+
+
+  
