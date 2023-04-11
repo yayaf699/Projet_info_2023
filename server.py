@@ -17,7 +17,7 @@ model = keras.models.load_model("./model_draw.h5")
 
 class_names = []
 
-with open("../classes.txt", 'r') as f:
+with open("./classes.txt", 'r') as f:
     class_names = [line.rstrip('\n') for line in f]
 
 def transform_img(img):
