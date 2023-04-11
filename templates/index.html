@@ -18,10 +18,7 @@
             <img id="diagramme"></img>
             <div class="tools">
                 
-                <!-- <form id="form" method=post enctype=multipart/form-data>
-                <input type="file" name="file">
-                <input type=submit value=Pull></form> -->
-                <button onClick="save()" type="button" class="button">Enregistrer</button>
+                <button onClick="predict()" type="button" class="button">Predict</button>
                 <button onClick="undo()" type="button" class="button">Undo</button>
                 <button onClick="clear_canvas()" type="button" class="button">Clear</button>
                 
@@ -33,9 +30,7 @@
                 <input onInput="draw_color = this.value" type="color" class="color-picker">
                 <input type="range" min="1" max="100" class="pen-range" onInput="draw_width = this.value">
 
-
-
-            </div>
+</div>
         </div>
 
     </body>

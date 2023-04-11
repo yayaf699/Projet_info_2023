@@ -95,7 +95,7 @@ function undo(){
 
 
 
-function save(){
+function predict(){
     // console.log("debut");
 
     // const canvas = document.getElementById("canvas");

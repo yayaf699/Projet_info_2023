@@ -3,8 +3,8 @@
 :root {}
 
 .field{
-    width: 65%;
-    margin:auto
+    text-align: center;
+    margin:auto;
 }
 
 body{

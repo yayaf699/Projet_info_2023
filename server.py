@@ -12,7 +12,7 @@ from PIL import Image, ImageOps
 
 app = Flask(__name__)
 
-model = keras.models.load_model("../model_draw.h5")
+model = keras.models.load_model("./model_draw.h5")
 
 
 class_names = []
@@ -52,13 +52,6 @@ app.config['UPLOAD_FOLDER'] = './image'
 def home():
     
     return render_template('index.html') #image=image_base
-
-@app.route("/save", methods=['POST'])
-def save():
-    # image_data = request.get_json()['image']
-    # img = Image.open(request.get(image_data, stream=True).raw)
-    # img.save(os.path.join(app.static_folder, "images", "uploaded_image.png"))
-     return "ok"
 
 
 def process_image(img_data):
