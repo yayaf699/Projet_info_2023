@@ -64,3 +64,10 @@ canvas {
     align-self: center;
     margin: 0 10px;
 }
+
+#predict-button{
+    background-color: blue;
+    width: 125px;
+    height: 60px;
+    font-size: large;
+}
