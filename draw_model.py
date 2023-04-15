@@ -38,56 +38,6 @@ valid_data = keras.utils.image_dataset_from_directory(
     batch_size=batch_size
 )
 
-# train_datagen = ImageDataGenerator(
-#     validation_split=0.2,
-#     rescale=1./255,
-#     rotation_range=30,
-#     width_shift_range=0.25,
-#     height_shift_range=0.25,
-#     shear_range=0.10,
-#     zoom_range=[0.5,1.5])
-
-
-# valid_datagen = ImageDataGenerator(validation_split=0.2,
-#                                    rescale=1./255)
-
-
-# plt.figure(figsize=(8, 8))
-# for images, labels in train_data.take(1):
-#     for i in range(9):
-#         ax = plt.subplot(3, 3, i + 1)
-#         data = images[i].numpy().astype("uint8")
-#         plt.imshow(data, cmap='gray', vmin=0, vmax=255)
-#         plt.title(train_data.class_names[labels[i]])
-#         plt.axis("off")
-
-# plt.show()
-
-
-# train_batches = train_datagen.flow_from_directory(
-#     dir,
-#     target_size=image_size,
-#     subset="training",
-#     color_mode="grayscale",
-#     batch_size=batch_size,
-#     seed=123,
-#     class_mode="sparse",
-#     shuffle=True,
-#     classes=class_names
-# )
-
-# valid_batches = valid_datagen.flow_from_directory(
-#     dir,
-#     target_size=image_size,
-#     subset="validation",
-#     color_mode="grayscale",
-#     batch_size=batch_size,
-#     seed=123,
-#     class_mode="sparse",
-#     shuffle=True,
-#     classes=class_names
-# )
-
 nbClasses = 345
 input_shape = (28,28,1)
 
@@ -145,7 +95,6 @@ history = model.fit(train_data,
                     verbose=1,
                     callbacks=[earlystopper])
 
-# (test_acc, test_loss) = model.evaluate(train_data,  valid_data, verbose=2)
 
 model.save('draw_model.h5')
 
