@@ -96,34 +96,6 @@ function undo(){
 
 
 function predict(){
-    // console.log("debut");
-
-    // const canvas = document.getElementById("canvas");
-
-    // // Récupération de l'image base64
-    // const data = canvas.toDataURL();
-
-    // // Création d'un formulaire avec l'image en tant que donnée
-    // const form = document.createElement("form");
-    // form.method = "POST";
-    // form.action = "/save";
-    // const input = document.createElement("input");
-    // input.type = "file";
-    // input.name = "image";
-    // input.filename="img";
-    // input.value = "img";
-    // form.appendChild(input);
-    // console.log("milieu");
-    // // Envoi du formulaire
-    // document.body.appendChild(form);
-
-    // form.submit();
-    // console.log("soumis !");
-
-    // //clear 
-    // clear_canvas();
-    // console.log("effacer");
-
 
     const canvas = document.getElementById('canvas');
     const dataURL = canvas.toDataURL();
@@ -134,22 +106,9 @@ function predict(){
         data: { image: dataURL },
         success: function(response) {
             // afficher l'image sur la page web
-                $('#diagramme').attr('src', 'data:image/png;base64,' + response.image);
+            $('#diagramme').attr('src', 'data:image/png;base64,' + response.image);
         }
       });
-      
-
-    
-    // fetch('/save', {
-    //     method: 'POST',
-    //     headers: {
-    //     'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ image: dataURL })
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log(data));    
-
 }
 
 

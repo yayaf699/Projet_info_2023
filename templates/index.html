@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Test</title>
+        <title>Drawing</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/ico"/>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
 
@@ -18,7 +18,7 @@
             <img id="diagramme"></img>
             <div class="tools">
                 
-                <button onClick="predict()" type="button" class="button">Predict</button>
+                <button id="predict-button" onClick="predict()" type="button" class="button">Predict</button>
                 <button onClick="undo()" type="button" class="button">Undo</button>
                 <button onClick="clear_canvas()" type="button" class="button">Clear</button>
                 
@@ -28,7 +28,7 @@
                 <div onClick="change_color(this)" class="color-field" style="background: yellow;"></div>
 
                 <input onInput="draw_color = this.value" type="color" class="color-picker">
-                <input type="range" min="1" max="100" class="pen-range" onInput="draw_width = this.value">
+                <input type="range" min="1" max="20" class="pen-range" onInput="draw_width = this.value">
 
 </div>
         </div>
