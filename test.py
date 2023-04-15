@@ -40,7 +40,7 @@ def transform_img(img):
 
 model = keras.models.load_model("model_draw.h5")
 
-img = Image.open("/home/yanisse/Images/test.png")
+img = Image.open("lien_vers_l_image")
 
 img = transform_img(img)
 

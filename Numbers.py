@@ -20,12 +20,6 @@ class_names = ['Zero', 'Un', 'Deux', 'Trois', 'Quatre', 'Cinq', 'Six', 'Sept', '
 
 print(test_images.shape)
 
-plt.figure()
-plt.imshow(train_images[0])
-plt.colorbar()
-plt.grid(False)
-plt.show()
-
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
@@ -54,13 +48,6 @@ datagen = ImageDataGenerator(rotation_range=30,
 
 datagen.fit(train_images.reshape(train_images.shape[0], 28, 28, 1))
 
-# for X_batch, y_batch in datagen.flow(train_images, train_labels, batch_size=9):
-#     for i in range(0,9):
-#         plt.subplot(330 + 1 + i)
-#         plt.axis('off')
-#         plt.imshow(X_batch[i][:,:,0], cmap='gray')
-#         plt.title('number = ' + str(y_batch[i]))
-#     plt.show()
 
 #Creation du model
 
@@ -111,7 +98,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 history = model.fit_generator(datagen.flow(train_images,train_labels , batch_size=84),
-                    validation_data=datagen.flow(test_images,test_labels , batch_size=84),
+                    validation_data=(test_images,test_labels),
                     epochs=30,
                     steps_per_epoch=train_images.shape[0] // 84,
                     callbacks=earlystopper)
@@ -140,14 +127,14 @@ plt.grid()
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-# model.save('premier_test.h5')
+model.save('model_numbers.h5')
 
 # print('\nTest accuracy:', test_acc)
 
-probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+# Pour tester les images du dataset de test
+# predictions = model.predict(test_images)
 
-# predictions = probability_model.predict(test_images)
-
+# La premiere prediction
 # print(predictions[0])
 
 # print(np.argmax(predictions[0]))
@@ -189,37 +176,17 @@ def plot_value_array(i, predictions_array, true_label):
   thisplot[predicted_label].set_color('red')
   thisplot[true_label].set_color('blue')
 
-# # Plot the first X test images, their predicted labels, and the true labels.
-# # Color correct predictions in blue and incorrect predictions in red.
-# num_rows = 10
-# num_cols = 7
-# num_images = num_rows*num_cols
-# plt.figure(figsize=(2*2*num_cols, 2*num_rows))
-# for i in range(num_images):
-#   plt.subplot(num_rows, 2*num_cols, 2*i+1)
-#   plot_image(i, predictions[i], test_labels, test_images)
-#   plt.subplot(num_rows, 2*num_cols, 2*i+2)
-#   plot_value_array(i, predictions[i], test_labels)
-# plt.tight_layout()
-# plt.show()
 
-img = cv2.imread("./test/Cinq.png", 0)
+
+img = cv2.imread("lien_vers_l_image", 0)
 img = cv2.bitwise_not(img)
 img = cv2.resize(img, (28, 28))
 img = np.expand_dims(img,0)
 
 
-print(img.shape)
-
-# print(test_images[0].shape)
-
 plt.figure()
 plt.imshow(img[0])
 plt.show()
-
-
-
-
 
 predictions_single = model.predict(img)
 
@@ -231,6 +198,3 @@ print(predictions_single)
 plot_value_array(1, predictions_single[0], test_labels)
 _ = plt.xticks(range(10), class_names, rotation=45)
 plt.show()
-
-
-model.save('model3.h5')
