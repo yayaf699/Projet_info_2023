@@ -1,5 +1,4 @@
-from flask import Flask, render_template, url_for, request, send_from_directory, send_file
-import os
+from flask import Flask, render_template, request, send_file
 from PIL import Image
 import base64
 import io
@@ -84,6 +83,7 @@ def predict_top3():
                       class_names[idx[1]],
                       class_names[idx[2]],'others'),
                       autopct=lambda p:'{:.2f}%'.format(p))
+    plt.title("Plus haute prédiction donnée : " + class_names[idx[0]])
 
     # Convertir le diagramme en objet BytesIO
     

@@ -34,16 +34,16 @@ canvas.addEventListener("mouseout", stop, false);
 function start(event){
     is_drawing = true;
     context.beginPath();
-    context.moveTo(event.clientX - canvas.offsetLeft, 
-                   event.clientY-canvas.offsetTop);
+    context.moveTo(event.pageX - canvas.offsetLeft, 
+                   event.pageY-canvas.offsetTop);
     event.preventDefault();
 }
 
 function draw(event){
     if (is_drawing)
     {
-        context.lineTo(event.clientX - canvas.offsetLeft, 
-            event.clientY-canvas.offsetTop);
+        context.lineTo(event.pageX - canvas.offsetLeft, 
+            event.pageY-canvas.offsetTop);
         context.strokeStyle = draw_color;
         context.lineWidth = draw_width;
         context.lineCap = "round";

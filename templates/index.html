@@ -5,13 +5,19 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Drawing</title>
-        <link rel="shortcut icon" href="favicon.ico" type="image/ico"/>
+        <link rel="icon" href="{{ url_for('static', filename='icon.png')}}" type="image/png"/>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
 
 
     </head>
 
+    <header>
+        <p id="title">Drawing Predictions</p>
+    </header>
+
     <body>
+        <p id="explainations">Inspiré du jeu Google Quick, Draw! Notre réseau de neurones est capable de prédire 345 objets différents.<br>
+            Essayez de dessiner quelque chose dans la zone de dessin ci-dessous, puis laissez le réseau tenter de prédire votre dessin! </p>
 
         <div class="field">
             <canvas id="canvas"></canvas>
