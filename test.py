@@ -5,8 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 from PIL import Image, ImageOps
-from googletrans import Translator
-
 
 class_names = []
 
@@ -40,9 +38,12 @@ def transform_img(img):
 
 model = keras.models.load_model("model_draw.h5")
 
-img = Image.open("lien_vers_l_image")
+img = Image.open("/home/yanisse/Images/test.png")
 
-img = transform_img(img)
+img = ImageOps.grayscale(img)
+img = img.resize( (28, 28), Image.Resampling.LANCZOS)
+
+img.save('data/icon.png')
 
 predictions_single = model.predict(img)
 

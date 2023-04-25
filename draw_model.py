@@ -1,10 +1,8 @@
-import os
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
 
 from keras import layers
-from keras.preprocessing.image import ImageDataGenerator
 
 
 
@@ -116,4 +114,3 @@ plt.xlabel('epoch')
 plt.grid()
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-
