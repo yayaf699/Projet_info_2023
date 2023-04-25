@@ -66,7 +66,8 @@ Cela devrait lancer le serveur, lorsque le chargement est terminé, ouvrer votre
 
 Tentez de dessiner quelque chose dans la zone de dessin, lorsque ce sera terminé appuyez sur le bouton 'Prédire', un diagramme camembert apparaîtra, il correspondra à ce que le réseau de neurones a prédit.
 
-### Liens utiles
+## Liens utiles
 
 <https://larswaechter.dev/blog/recognizing-hand-drawn-doodles/>
+
 <https://www.tensorflow.org/tutorials/keras/classification>
